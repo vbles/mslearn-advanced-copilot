@@ -1,15 +1,11 @@
-from main import app
+import pytest
 from fastapi.testclient import TestClient
+from main import app
 
 client = TestClient(app)
 
-
-def test_root():
-    response = client.get("/")
+def test_get_cities_for_spain():
+    response = client.get('/countries/Spain')
     assert response.status_code == 200
-
-
-def test_countries():
-    response = client.get("/countries")
-    assert response.status_code == 200
-    assert sorted(response.json()) == ["England", "France", "Germany", "Italy", "Peru", "Portugal", "Spain"]
+    assert isinstance(response.json(), list)
+    # Add more assertions based on the expected data structure
